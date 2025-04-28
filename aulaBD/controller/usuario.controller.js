@@ -1,16 +1,14 @@
-const db = require("../config/database");
-const md5 = require('md5');
+const usuarioDAO = require("../model/usuario.dao");
+const usuarioRN = require("../model/usuario.rn");
 
-exports.listarUsuarios = async function(){
-    const {rows} = await db.query("SELECT * FROM usuario WHERE isativo = true");
-    return rows;
-}
+exports.listarUsuarios = async function () {
+    return usuarioDAO.listarUsuarios();
+};
 
-exports.criarUsuario = async function(novo_usuario){
-    const resposta = await db.query(
-        'INSERT INTO usuario (nome, username, senha, isativo) VALUES ($1, $2, $3, $4)',
-        [novo_usuario.nome, novo_usuario.username, md5(novo_usuario.senha), true]
-    );
-	
-    return "Produto cadastrado com sucesso!";
-}
+exports.criarUsuario = async function (novo_usuario) {
+    if (usuarioRN.validarUsername(novo_usuario.username)){
+        await usuarioDAO.criarUsuario(novo_usuario);
+        return true;
+    }
+    return false;
+};
