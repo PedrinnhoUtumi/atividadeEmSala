@@ -26,3 +26,15 @@ exports.validarUsername = (username) => {
   };
   return false;
 };
+
+exports.verificaUsuarioNoBancoDeDados = async function(novo_usuario) {
+  const consultaTodos = await db.query(
+      'SELECT * FROM usuario WHERE username = $1',
+      [novo_usuario.username]
+  )
+  if (consultaTodos.rows.length > 0) {
+      return false
+  }
+  return true
+  
+}
