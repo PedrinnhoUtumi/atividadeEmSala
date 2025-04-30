@@ -30,7 +30,7 @@ app.post('/cadastrarUsuario', function(req, res){
   const novo_usuario = new usuario(req.body.nome, req.body.username, req.body.senha);
   const resultado = usuarioController.criarUsuario(novo_usuario);
   
-  resultado.then(resp => {resp ? res.redirect('/listarUsuarios') : res.render('cadastroUsuario', {usuario: novo_usuario, mensagem: "Erro: Username deve ter entre 5 e 10 caracteres"})})
+  resultado.then(resp => {resp ? res.redirect('/listarUsuarios') : res.render('cadastroUsuario', {usuario: novo_usuario, mensagem: "Erro: Username deve ter 8 ou mais caracteres"})})
 
 });
 
