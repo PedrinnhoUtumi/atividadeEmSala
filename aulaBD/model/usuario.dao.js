@@ -15,3 +15,19 @@ exports.criarUsuario = async function(novo_usuario){
     return "Produto cadastrado com sucesso!";
 }
 
+exports.consultarUsuarios = async function(novo_usuario) {
+    const consultaTodos = await db.query(
+        'SELECT * FROM usuario WHERE username = $1',
+        [novo_usuario.username]
+    )
+    return consultaTodos
+}
+
+exports.desativarUsuarios = async function(usuario) {
+    const consultaTodos = await db.query(
+        'UPDATE usuario SET isativo = false WHERE username = $1',
+        [usuario.username]
+    )
+    return consultaTodos
+
+}

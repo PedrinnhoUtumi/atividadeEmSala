@@ -1,13 +1,15 @@
+const usuariosConsultados = require("./usuario.dao")
+
 exports.validarUsername = (username) => {
   if (username.length >= 8) {
     var caractere = ''
     let letras = 0
     let digitos = 0
     let charEspeciais = 0
-    for ( let i = 0; i < username.length; i++) {
+    for (let i = 0; i < username.length; i++) {
       caractere = username.charAt(i)
       if (caractere.toUpperCase()) {
-        console.log("AEEEEEEEEEEEEEEEEEEEEEEEEEE");        
+        console.log("AEEEEEEEEEEEEEEEEEEEEEEEEEE");
         letras++
       }
       if (/[0-9]/.test(caractere)) {
@@ -18,7 +20,7 @@ exports.validarUsername = (username) => {
         console.log("OBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         charEspeciais++
       }
-      if (letras && digitos && charEspeciais){
+      if (letras && digitos && charEspeciais) {
         console.log("TUDO CERTINHOOOOOO");
         return true
       }
@@ -27,14 +29,21 @@ exports.validarUsername = (username) => {
   return false;
 };
 
-exports.verificaUsuarioNoBancoDeDados = async function(novo_usuario) {
-  const consultaTodos = await db.query(
-      'SELECT * FROM usuario WHERE username = $1',
-      [novo_usuario.username]
-  )
-  if (consultaTodos.rows.length > 0) {
-      return false
+exports.verificaUsuarioNoBancoDeDados = async function (novo_usuario) {
+  let usuarios = await usuariosConsultados.consultarUsuarios(novo_usuario)
+  if (usuarios.rows.length > 0) {
+    return false
   }
   return true
-  
+
+}
+
+exports.usuarioDesativado = async function (usuario) {
+  let usuarios = await usuariosConsultados.consultarUsuarios(usuario)
+  if (usuarios.rows.length > 0) {
+    let usuariosDesativados = await usuariosConsultados.desativarUsuarios(usuario)
+    return true
+  }
+  return false
+
 }

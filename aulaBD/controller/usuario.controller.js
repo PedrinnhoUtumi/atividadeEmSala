@@ -12,3 +12,20 @@ exports.criarUsuario = async function (novo_usuario) {
     }
     return false;
 };
+
+
+exports.desativandoUsuario = async function() {
+    const usuario = {}; 
+    const usuarios = await usuarioDAO.consultarUsuarios(usuario);
+  
+    const listaUsuarios = await Promise.all(
+      usuarios.rows.map(async (u) => {
+        const desativado = await usuarioRN.usuarioDesativado(u);
+        return {
+          ...u,
+          desativado
+        };
+      })
+    );
+  
+}
