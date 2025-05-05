@@ -17,7 +17,7 @@ exports.criarUsuario = async function(novo_usuario){
 
 exports.consultarUsuarios = async function(novo_usuario) {
     const consultaTodos = await db.query(
-        'SELECT * FROM usuario WHERE username = $1',
+        'SELECT * FROM usuario WHERE username = ($1)',
         [novo_usuario.username]
     )
     return consultaTodos

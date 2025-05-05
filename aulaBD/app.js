@@ -22,7 +22,7 @@
     const resultado = usuarioController.listarUsuarios();
     
 
-    resultado.then(resp => {res.render('listagemUsuarios', {resp: listaAtivos})});
+    resultado.then(resp => {res.render('listagemUsuarios', {resp})});
   });
 
   app.get('/cadastrarUsuario', function(req, res){
