@@ -6,26 +6,11 @@ exports.listarUsuarios = async function () {
 };
 
 exports.criarUsuario = async function (novo_usuario) {
-    if (usuarioRN.validarUsername(novo_usuario.username) && usuarioRN.verificaUsuarioNoBancoDeDados(novo_usuario)){
+  let usuarioNaoExistente = await usuarioDAO.consultarUsuarios(novo_usuario);
+  let usuarioValido = usuarioRN.validarUsername(novo_usuario.username);
+    if (usuarioValido && usuarioNaoExistente){
         await usuarioDAO.criarUsuario(novo_usuario);
         return true;
     }
     return false;
 };
-
-
-exports.desativandoUsuario = async function() {
-    const usuario = {}; 
-    const usuarios = await usuarioDAO.consultarUsuarios(usuario);
-  
-    const listaUsuarios = await Promise.all(
-      usuarios.rows.map(async (u) => {
-        const desativado = await usuarioRN.usuarioDesativado(u);
-        return {
-          ...u,
-          desativado
-        };
-      })
-    );
-  
-}

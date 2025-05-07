@@ -12,3 +12,19 @@
 {{else}}
     <p>Não há usuários cadastrados.</p>
 {{/if}}
+
+<script>
+  let desativarUsuarios = async function(username)  {
+    const resposta = await fetch('/desativarUsuario', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+
+    if (resposta.ok) {
+      window.location.reload();
+    } else {
+      console.log('Erro ao desativar usuário');
+    }
+  }
+</script>

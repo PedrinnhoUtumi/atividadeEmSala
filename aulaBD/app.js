@@ -37,6 +37,21 @@
 
   });
 
+  app.post('/desativandoUsuario', async function(req, res){
+    const { username } = req.body;
+    const usuarioASerDesativado = new Usuario(null, username, null);
+    const desativado = await usuarioController.desativandoUsuario(usuarioASerDesativado);
+  
+    if (desativado) {
+      res.status(200).json({ sucesso: true });
+    } else {
+      res.status(400).json({ erro: "Erro ao desativar" });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}...`);
   });
+
+
+  

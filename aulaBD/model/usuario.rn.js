@@ -8,7 +8,7 @@ exports.validarUsername = (username) => {
     let charEspeciais = 0
     for (let i = 0; i < username.length; i++) {
       caractere = username.charAt(i)
-      if (caractere.toUpperCase()) {
+      if (/[A-Z]/.test(caractere)) {
         console.log("AEEEEEEEEEEEEEEEEEEEEEEEEEE");
         letras++
       }
@@ -48,4 +48,4 @@ exports.usuarioDesativado = async function (usuario) {
   }
   return false
 
-}
+} 
